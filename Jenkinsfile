@@ -1,12 +1,18 @@
-node {    
-      def app     
+node {
+      def app   
+      
+      environment {
+          registry = "registry.hub.docker.com"
+          image = "fernii/nodejs-helloworld-jenkins"
+        }
+      
       stage('Clone repository') {
             checkout scm    
       }
       
       stage('Build image') {         
-            app = docker.build("docker.io/fernii/nodejs-helloworld-jenkins")
-            sh "echo docker.io/fernii/nodejs-helloworld-jenkins:latest > sysdig_secure_images"
+            app = docker.build("${image}")
+            sh "echo ${registry}/${image}:${env.BUILD_NUMBER} > sysdig_secure_images"
        }
       
       stage('Scan image with Sysdig Secure') {           
@@ -22,7 +28,7 @@ node {
           }
         }     
        stage('Push image') {
-            docker.withRegistry('https://registry.hub.docker.com', 'docker-creds') {            
+            docker.withRegistry("https://${registry}", 'docker-hub-credentials') {       
             app.push("${env.BUILD_NUMBER}")            
             app.push("latest")        
               }    
