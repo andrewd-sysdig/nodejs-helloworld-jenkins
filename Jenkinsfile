@@ -1,13 +1,14 @@
 node {    
       def app     
-      stage('Clone repository') {               
-             
+      stage('Clone repository') {
             checkout scm    
-      }     
+      }
+      
       stage('Build image') {         
-       
-            app = docker.build("fernii/nodejs-helloworld-jenkins")    
-       }     
+            app = docker.build("docker.io/fernii/nodejs-helloworld-jenkins")
+            sh "echo docker.io/fernii/nodejs-helloworld-jenkins:latest > sysdig_secure_images"
+       }
+      
       stage('Scan image with Sysdig Secure') {           
           script {
           // Scan from local image recently built
@@ -21,9 +22,9 @@ node {
           }
         }     
        stage('Push image') {
-                                                  docker.withRegistry('https://registry.hub.docker.com', 'docker-creds') {            
-       app.push("${env.BUILD_NUMBER}")            
-       app.push("latest")        
+            docker.withRegistry('https://registry.hub.docker.com', 'docker-creds') {            
+            app.push("${env.BUILD_NUMBER}")            
+            app.push("latest")        
               }    
            }
         }
