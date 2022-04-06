@@ -5,8 +5,8 @@ node {
       }
       
       stage('Build image') {         
-            app = docker.build("docker.io/fernii/nodejs-helloworld-jenkins")
-            sh "echo docker.io/fernii/nodejs-helloworld-jenkins > sysdig_secure_images"
+            app = docker.build("fernii/nodejs-helloworld-jenkins")
+            sh "echo fernii/nodejs-helloworld-jenkins > sysdig_secure_images"
        }
       
       stage('Scan image with Sysdig Secure') {           
