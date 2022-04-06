@@ -27,10 +27,5 @@ node {
           // sysdig engineCredentialsId: 'sysdig-secure-api-credentials', name: 'sysdig_secure_images', inlineScanning: false, bailOnFail: true
           }
         }     
-       stage('Push image') {
-            docker.withRegistry("https://${registry}", 'docker-creds') {       
-            app.push("${env.BUILD_NUMBER}")            
-            app.push("latest")        
-              }    
-           }
+
         }
