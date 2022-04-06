@@ -1,6 +1,7 @@
 # FROM node:17-slim
 # This is node:17-slim at 17/3/22
-FROM node@sha256:c5725a63cb29b78a2ccfffbc70c0e7bc938c925633dbb39a96acbec57c792994
+# FROM node@sha256:c5725a63cb29b78a2ccfffbc70c0e7bc938c925633dbb39a96acbec57c792994
+ FROM node:16
 
 # Create app directory
 WORKDIR /usr/src/app
